@@ -16,7 +16,7 @@ func main() {
 	}
 
 	// !!! [cols][rows]
-	emoji := [][]bool{
+	emoji1 := [][]bool{
 		{true, true, false, false, false, false, true, true},
 		{true, false, true, true, true, true, false, true},
 		{false, true, false, true, true, false, true, false},
@@ -26,13 +26,15 @@ func main() {
 		{true, false, true, true, true, true, false, true},
 		{true, true, false, false, false, false, true, true},
 	}
+
 	clearMatrix(rows, cols)
 
 	for {
+
 		for c := range cols {
 			cols[c].High()
 			for l := range rows {
-				rows[l].Set(emoji[l][c])
+				rows[l].Set(emoji1[l][c])
 			}
 			clearMatrix(rows, cols)
 		}
