@@ -1,0 +1,35 @@
+int L[] = { 4, A2, 7, 5, 13, 8, 12, 6 };    //Array com pinos das linhas
+int C[] = { A5, 11, 10, 3, 9, 2, A4, A3 };  //Array com pinos das colunas
+unsigned char emoji[8][8] =                 //Matriz com binário para formar o emoji :)
+  {
+    { 1, 1, 0, 0, 0, 0, 1, 1 },
+    { 1, 0, 1, 1, 1, 1, 0, 1 },
+    { 0, 1, 0, 1, 1, 0, 1, 0 },
+    { 0, 1, 1, 1, 1, 1, 1, 0 },
+    { 0, 1, 0, 1, 1, 0, 1, 0 },
+    { 0, 1, 1, 0, 0, 1, 1, 0 },
+    { 1, 0, 1, 1, 1, 1, 0, 1 },
+    { 1, 1, 0, 0, 0, 0, 1, 1 }
+  };
+void setup() {  //Define todos os pinos como saída
+  for (int i = 0; i < 8; i++) {
+    pinMode(L[i], OUTPUT);  //Define todos os pinos das linha como saída
+    pinMode(C[i], OUTPUT);  //Define todos os pinos das coluna como saída
+  }
+}
+void loop() {
+  for (int c = 0; c < 8; c++) {         //Percorre os pinos das colunas
+    digitalWrite(C[c], HIGH);           //Define todos os pinos das colunas como alto (HIGH)
+    for (int l = 0; l < 8; l++) {       //Percorre os pinos das linha
+      digitalWrite(L[l], emoji[l][c]);  //Define os pinos das linha como HIGH ou LOW conforme desenho da matriz emoji
+    }
+    Limpar();  //Apaga as luzes do display
+  }
+}
+void Limpar() {  //Função para limpar o display - Desligando todos os LEDS
+  //Como a matriz é cátodo comum, colocamos as linhas em nível alto (HIGH) e as colunas em nível baixo(LOW)
+  for (int i = 0; i < 8; i++) {
+    digitalWrite(L[i], HIGH);  //Sinal alto nas linhas
+    digitalWrite(C[i], LOW);   //Sinal baixo nas colunas
+  }
+}
