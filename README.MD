@@ -21,3 +21,4 @@ Emoji in 8x8 Led Matrix with an arduino uno smd and Golang.
 
 * Uses PC2 to PC5 (ADC2 to ADC5) as digital input along D2 to D13
 * After setting each column, the program clears the entire matrix, giving the ilusion of all columns being active at the same time
+* It is necessary to use pointers to not flick the leds between each loop

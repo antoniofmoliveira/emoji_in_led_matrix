@@ -2,6 +2,7 @@ package main
 
 import (
 	"machine"
+	"time"
 )
 
 func main() {
@@ -15,37 +16,70 @@ func main() {
 		cols[i].Configure(machine.PinConfig{Mode: machine.PinOutput})
 	}
 
-	// !!! [cols][rows]
-	emoji1 := [][]bool{
-		{true, true, false, false, false, false, true, true},
-		{true, false, true, true, true, true, false, true},
-		{false, true, false, true, true, false, true, false},
-		{false, true, true, true, true, true, true, false},
-		{false, true, false, true, true, false, true, false},
-		{false, true, true, false, false, true, true, false},
-		{true, false, true, true, true, true, false, true},
-		{true, true, false, false, false, false, true, true},
-	}
+	emoji1 := [8][8]bool{}
+	emoji2 := [8][8]bool{}
 
-	clearMatrix(rows, cols)
+	emoji1 = convertToMatrix(&[8]string{
+		"11000011",
+		"10111101",
+		"01011010",
+		"01111110",
+		"01011010",
+		"01100110",
+		"10111101",
+		"11000011"})
+
+	emoji2 = convertToMatrix(&[8]string{
+		"11000011",
+		"10111101",
+		"01011010",
+		"01111110",
+		"01100110",
+		"01011010",
+		"10111101",
+		"11000010"})
 
 	for {
+		clearMatrix(&rows, &cols)
 
-		for c := range cols {
-			cols[c].High()
-			for l := range rows {
-				rows[l].Set(emoji1[l][c])
-			}
-			clearMatrix(rows, cols)
+		nowMore2Secs := time.Now().Add(2 * time.Second)
+		for time.Now().Before(nowMore2Secs) {
+			show(&cols, &rows, &emoji1)
+		}
+
+		clearMatrix(&rows, &cols)
+
+		nowMore2Secs2 := time.Now().Add(2 * time.Second)
+		for time.Now().Before(nowMore2Secs2) {
+			show(&cols, &rows, &emoji2)
 		}
 	}
 
 }
 
-func clearMatrix(rows []machine.Pin, cols []machine.Pin) {
-	for i := range rows {
-		cols[i].Low()
-		rows[i].High()
+func show(cols *[]machine.Pin, rows *[]machine.Pin, matrix *[8][8]bool) {
+	for c := range *cols {
+		(*cols)[c].High()
+		for r := range *rows {
+			(*rows)[r].Set(matrix[r][c])
+		}
+		clearMatrix(rows, cols)
 	}
+}
 
+func clearMatrix(rows *[]machine.Pin, cols *[]machine.Pin) {
+	for i := range *rows {
+		(*cols)[i].Low()
+		(*rows)[i].High()
+	}
+}
+
+func convertToMatrix(t *[8]string) [8][8]bool {
+	response := [8][8]bool{}
+	for row := range 8 {
+		for col := range 8 {
+			response[row][col] = t[row][col] == '1'
+		}
+	}
+	return response
 }
