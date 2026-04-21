@@ -3,8 +3,8 @@
 Emoji in 8x8 Led Matrix with an arduino uno smd and Golang.
 
 * VS Code
-* Golang 1.25.8
-* TinyGo 0.40.1 [TinyGo](tinygo.org)
+* Golang 1.26.2
+* TinyGo 0.41.0 [TinyGo](tinygo.org)
 * TinyGo Toolkit for VS Code (amken.tinygo-toolkit)
 
 ## TinyGo Toolkit
