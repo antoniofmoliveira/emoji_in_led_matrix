@@ -7,5 +7,5 @@
   },
   "tinygo.port": "/dev/ttyUSB0",
   "tinygo.serialBaudRate": 9600,
-  "go.goroot": "/home/antonio/.cache/tinygo/goroot-ea9d8032b485830a377dcea9a3e9d88ba323cc94ff2ee591fe08fcd100f55885"
+  "go.goroot": "/home/antonio/.cache/tinygo/goroot-8364d9b45ef16e556942c0c64b8905a4698b7620f1db62df90b3e10f2ff01e86",
 }
