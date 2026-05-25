@@ -37,7 +37,10 @@ func main() {
 		"01100110",
 		"01011010",
 		"10111101",
-		"11000010"})
+		"11000011"})
+
+	emoji3 := [8]int{0b11000011, 0b10111101, 0b01011010, 0b01111110, 0b01100110, 0b01011010, 0b10111101, 0b11000011}
+	emoji4 := [8]int{0b11000011, 0b10111101, 0b01011010, 0b01111110, 0b01011010, 0b01100110, 0b10111101, 0b11000011}
 
 	for {
 		clearMatrix(&rows, &cols)
@@ -52,6 +55,18 @@ func main() {
 		nowMore2Secs2 := time.Now().Add(2 * time.Second)
 		for time.Now().Before(nowMore2Secs2) {
 			show(&cols, &rows, &emoji2)
+		}
+
+		clearMatrix(&rows, &cols)
+		nowMore2Secs3 := time.Now().Add(2 * time.Second)
+		for time.Now().Before(nowMore2Secs3) {
+			show2(&cols, &rows, &emoji3)
+		}
+
+		clearMatrix(&rows, &cols)
+		nowMore2Secs4 := time.Now().Add(2 * time.Second)
+		for time.Now().Before(nowMore2Secs4) {
+			show2(&cols, &rows, &emoji4)
 		}
 	}
 
@@ -82,4 +97,16 @@ func convertToMatrix(t *[8]string) [8][8]bool {
 		}
 	}
 	return response
+}
+
+var posLed = []int{0b10000000, 0b01000000, 0b00100000, 0b00010000, 0b00001000, 0b00000100, 0b00000010, 0b00000001}
+
+func show2(cols *[]machine.Pin, rows *[]machine.Pin, t *[8]int) {
+	for col := range *cols {
+		(*cols)[col].High()
+		for row := range *rows {
+			(*rows)[row].Set(t[row]&posLed[col] != 0b00000000)
+		}
+		clearMatrix(rows, cols)
+	}
 }
